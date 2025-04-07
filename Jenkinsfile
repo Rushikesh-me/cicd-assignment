@@ -16,7 +16,7 @@ pipeline {
         }
         stage('Static Code Analysis') {
             steps {
-                sh 'mvn sonar:sonar -Dsonar.projectKey=cicd-assignment-key -Dsonar.host.url=http://54.217.181.39:9000 -Dsonar.login=sqb_7160cbd3778feb6692bae217c0db39984fe17c3a'
+                sh 'mvn sonar:sonar -Dsonar.projectKey=cicd-assignment-key -Dsonar.host.url=http://54.217.181.39:9000 -Dsonar.login=sqb_7836eba448d872ac1e8ffbc69a7ceeedfa3f224b -Dsonar.password=RushikesH@028'
             }
         }
         stage('Test') {
