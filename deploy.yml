@@ -1,6 +1,7 @@
 ---
 - name: Deploy the productservice Docker container
   hosts: localhost
+  connection: local
   become: yes
   gather_facts: false
   environment:
