@@ -41,7 +41,11 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                sh 'ansible-playbook deploy.yml'
+                sh '''
+                  export DOCKER_HOST=unix:///var/run/docker.sock
+                  echo "DOCKER_HOST is $DOCKER_HOST"
+                  ansible-playbook deploy.yml
+                '''
             }
         }
     }
