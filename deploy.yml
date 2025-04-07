@@ -12,6 +12,10 @@
     container_port: 9090
 
   tasks:
+    - name: Debug DOCKER_HOST environment variable
+      debug:
+        msg: "DOCKER_HOST is {{ lookup('env', 'DOCKER_HOST') }}"
+
     - name: Ensure Docker service is running
       service:
         name: docker
@@ -23,12 +27,14 @@
         name: "{{ container_name }}"
         state: absent
         force_kill: true
+        docker_host: "unix:///var/run/docker.sock"
       ignore_errors: yes
 
     - name: Pull the latest Docker image from Docker Hub
       docker_image:
         name: "{{ image_name }}"
         source: pull
+        docker_host: "unix:///var/run/docker.sock"
 
     - name: Run the new Docker container
       docker_container:
@@ -38,6 +44,7 @@
         restart_policy: always
         published_ports:
           - "{{ published_port }}:{{ container_port }}"
+        docker_host: "unix:///var/run/docker.sock"
 
     - name: Wait for the container to be available
       wait_for:
