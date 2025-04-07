@@ -36,12 +36,12 @@ pipeline {
         }
         stage('Debug Environment') {
             steps {
-                sh 'echo "DOCKER_HOST is $DOCKER_HOST"'
+                sh 'DOCKER_HOST=unix:///var/run/docker.sock ansible-playbook -i inventory_file deploy.yml'
             }
         }
         stage('Deploy') {
             steps {
-                sh 'ansible-playbook -i inventory_file deploy.yml'
+                sh 'ansible-playbook deploy.yml'
             }
         }
     }
