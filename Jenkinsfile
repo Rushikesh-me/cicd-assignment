@@ -34,6 +34,11 @@ pipeline {
                 sh 'docker build -t rushikesh0028/productservice:v1 .'
             }
         }
+        stage('Debug Environment') {
+            steps {
+                sh 'echo "DOCKER_HOST is $DOCKER_HOST"'
+            }
+        }
         stage('Deploy') {
             steps {
                 sh 'ansible-playbook -i inventory_file deploy.yml'
