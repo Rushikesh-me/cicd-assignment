@@ -1,0 +1,47 @@
+---
+- name: Deploy the productservice Docker container
+  hosts: localhost
+  become: yes
+  vars:
+    container_name: productservice
+    image_name: "rushikesh0028/productservice:v1"
+    published_port: 9090
+    container_port: 9090
+
+  tasks:
+    - name: Ensure Docker service is running
+      service:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Remove existing container if it exists
+      docker_container:
+        name: "{{ container_name }}"
+        state: absent
+        force_kill: true
+      ignore_errors: yes
+
+    - name: Pull the latest Docker image from Docker Hub
+      docker_image:
+        name: "{{ image_name }}"
+        source: pull
+
+    - name: Run the new Docker container
+      docker_container:
+        name: "{{ container_name }}"
+        image: "{{ image_name }}"
+        state: started
+        restart_policy: always
+        published_ports:
+          - "{{ published_port }}:{{ container_port }}"
+        # Optional: set environment variables if required by your app
+        # env:
+        #   SPRING_PROFILES_ACTIVE: production
+
+    - name: Wait for the container to be available
+      wait_for:
+        host: "127.0.0.1"
+        port: "{{ published_port }}"
+        state: started
+        timeout: 60
