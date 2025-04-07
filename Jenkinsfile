@@ -31,7 +31,7 @@ pipeline {
         }
         stage('Docker Build') {
             steps {
-                sh 'docker build -t yourapp:latest .'
+                sh 'docker build -t rushikesh0028/productservice:v1 .'
             }
         }
         stage('Deploy') {
