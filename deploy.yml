@@ -2,6 +2,9 @@
 - name: Deploy the productservice Docker container
   hosts: localhost
   become: yes
+  gather_facts: false
+  environment:
+    DOCKER_HOST: "unix:///var/run/docker.sock"
   vars:
     container_name: productservice
     image_name: "rushikesh0028/productservice:v1"
@@ -35,9 +38,6 @@
         restart_policy: always
         published_ports:
           - "{{ published_port }}:{{ container_port }}"
-        # Optional: set environment variables if required by your app
-        # env:
-        #   SPRING_PROFILES_ACTIVE: production
 
     - name: Wait for the container to be available
       wait_for:
