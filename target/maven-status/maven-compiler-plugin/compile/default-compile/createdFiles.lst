@@ -1,0 +1,8 @@
+com/tus/product/repos/CouponRepo.class
+com/tus/product/controller/CouponRestController.class
+com/tus/product/ProductserviceApplication.class
+com/tus/product/model/Coupon.class
+com/tus/product/dto/Coupon.class
+com/tus/product/controller/ProductRestController.class
+com/tus/product/repos/ProductRepo.class
+com/tus/product/model/Product.class

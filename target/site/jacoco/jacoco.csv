@@ -1,0 +1,7 @@
+GROUP,PACKAGE,CLASS,INSTRUCTION_MISSED,INSTRUCTION_COVERED,BRANCH_MISSED,BRANCH_COVERED,LINE_MISSED,LINE_COVERED,COMPLEXITY_MISSED,COMPLEXITY_COVERED,METHOD_MISSED,METHOD_COVERED
+productservice,com.tus.product,ProductserviceApplication,5,3,0,0,2,1,1,1,1,1
+productservice,com.tus.product.controller,CouponRestController,99,3,4,0,23,1,12,1,10,1
+productservice,com.tus.product.controller,ProductRestController,173,69,13,5,46,19,17,4,10,2
+productservice,com.tus.product.dto,Coupon,31,0,0,0,13,0,9,0,9,0
+productservice,com.tus.product.model,Coupon,6,25,0,0,2,11,2,7,2,7
+productservice,com.tus.product.model,Product,0,58,0,2,0,24,0,16,0,15

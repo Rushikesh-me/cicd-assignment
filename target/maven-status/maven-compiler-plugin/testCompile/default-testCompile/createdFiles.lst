@@ -1,0 +1,4 @@
+com/tus/product/controller/ProductRestControllerUnitTest.class
+com/tus/product/ProductE2ETest.class
+com/tus/product/ProductIntegrationTest.class
+com/tus/product/CouponRepoIntegrationTest.class

@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Product.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">productservice</a> &gt; <a href="index.source.html" class="el_package">com.tus.product.model</a> &gt; <span class="el_source">Product.java</span></div><h1>Product.java</h1><pre class="source lang-java linenums">// Location: productservice/src/main/java/com/tus/product/model/Product.java
+package com.tus.product.model;
+
+import java.math.BigDecimal;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Transient;
+
+@Entity
+<span class="fc" id="L12">public class Product {</span>
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String name;
+    private String description;
+    private BigDecimal price; // This will store the ORIGINAL price
+
+    private String appliedCouponCode; // Stores the coupon code applied (persistent)
+
+    @Transient
+    private String couponCode; // Used for input during POST/PUT requests
+
+    @Transient
+    private BigDecimal discountedPrice; // Calculated price after discount (not stored in DB)
+
+    // --- Getters and Setters ---
+
+    public Long getId() {
+<span class="fc" id="L32">        return id;</span>
+    }
+
+    public void setId(Long id) {
+<span class="fc" id="L36">        this.id = id;</span>
+<span class="fc" id="L37">    }</span>
+
+    public String getName() {
+<span class="fc" id="L40">        return name;</span>
+    }
+
+    public void setName(String name) {
+<span class="fc" id="L44">        this.name = name;</span>
+<span class="fc" id="L45">    }</span>
+
+    public String getDescription() {
+<span class="fc" id="L48">        return description;</span>
+    }
+
+    public void setDescription(String description) {
+<span class="fc" id="L52">        this.description = description;</span>
+<span class="fc" id="L53">    }</span>
+
+    public BigDecimal getPrice() {
+<span class="fc" id="L56">        return price;</span>
+    }
+
+    public void setPrice(BigDecimal price) {
+<span class="fc" id="L60">        this.price = price;</span>
+<span class="fc" id="L61">    }</span>
+
+    // Getter/Setter for the applied coupon code (stored in DB)
+    public String getAppliedCouponCode() {
+<span class="fc" id="L65">        return appliedCouponCode;</span>
+    }
+
+    public void setAppliedCouponCode(String appliedCouponCode) {
+<span class="fc" id="L69">        this.appliedCouponCode = appliedCouponCode;</span>
+<span class="fc" id="L70">    }</span>
+
+    // Getter/Setter for the input coupon code (transient)
+    public String getCouponCode() {
+<span class="fc" id="L74">        return couponCode;</span>
+    }
+
+    public void setCouponCode(String couponCode) {
+<span class="fc" id="L78">        this.couponCode = couponCode;</span>
+<span class="fc" id="L79">    }</span>
+
+    // Getter/Setter for the calculated discounted price (transient)
+    public BigDecimal getDiscountedPrice() {
+        // Calculate on the fly if not set (useful for GET requests)
+<span class="fc bfc" id="L84" title="All 2 branches covered.">        if (this.discountedPrice == null) {</span>
+             // Default to original price if no discount logic applied yet
+<span class="fc" id="L86">            return this.price;</span>
+        }
+<span class="fc" id="L88">        return discountedPrice;</span>
+    }
+
+    public void setDiscountedPrice(BigDecimal discountedPrice) {
+<span class="fc" id="L92">        this.discountedPrice = discountedPrice;</span>
+<span class="fc" id="L93">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.13.202504020838</span></div></body></html>

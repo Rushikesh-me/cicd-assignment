@@ -1,0 +1,8 @@
+/Users/rushikesh/Desktop/Microservices/productservice/src/main/java/com/tus/product/ProductserviceApplication.java
+/Users/rushikesh/Desktop/Microservices/productservice/src/main/java/com/tus/product/dto/Coupon.java
+/Users/rushikesh/Desktop/Microservices/productservice/src/main/java/com/tus/product/model/Product.java
+/Users/rushikesh/Desktop/Microservices/productservice/src/main/java/com/tus/product/controller/ProductRestController.java
+/Users/rushikesh/Desktop/Microservices/productservice/src/main/java/com/tus/product/model/Coupon.java
+/Users/rushikesh/Desktop/Microservices/productservice/src/main/java/com/tus/product/repos/CouponRepo.java
+/Users/rushikesh/Desktop/Microservices/productservice/src/main/java/com/tus/product/controller/CouponRestController.java
+/Users/rushikesh/Desktop/Microservices/productservice/src/main/java/com/tus/product/repos/ProductRepo.java
