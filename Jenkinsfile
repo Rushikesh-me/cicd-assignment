@@ -41,7 +41,15 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                sh 'ansible-playbook -i inventory_file deploy.yml'
+                sh '''
+                  export DOCKER_HOST=unix:///var/run/docker.sock
+                  unset DOCKER_TLS_VERIFY
+                  unset DOCKER_CERT_PATH
+                  # Set ANSIBLE_COLLECTIONS_PATHS to force using the collection in the user's home directory.
+                  export ANSIBLE_COLLECTIONS_PATHS=/home/ec2-user/.ansible/collections
+                  echo "ANSIBLE_COLLECTIONS_PATHS is $ANSIBLE_COLLECTIONS_PATHS"
+                  ansible-playbook -i "localhost," deploy.yml
+                '''
             }
         }
     }
