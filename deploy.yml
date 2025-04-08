@@ -5,7 +5,7 @@
   become: yes
   gather_facts: false
   environment:
-    DOCKER_HOST: "unix:///var/run/docker.sock"
+    
   vars:
     container_name: productservice
     image_name: "rushikesh0028/productservice:v1"
@@ -28,14 +28,15 @@
         name: "{{ container_name }}"
         state: absent
         force_kill: true
-        docker_host: "unix:///var/run/docker.sock"
+        
       ignore_errors: yes
 
     - name: Pull the latest Docker image from Docker Hub
       docker_image:
         name: "{{ image_name }}"
         source: pull
-        docker_host: "unix:///var/run/docker.sock"
+        api_version: "1.41"
+        
 
     - name: Run the new Docker container
       docker_container:
@@ -44,8 +45,8 @@
         state: started
         restart_policy: always
         published_ports:
-          - "{{ published_port }}:{{ container_port }}"
-        docker_host: "unix:///var/run/docker.sock"
+          - "{{ published_port }}:{{ container_port }}"\
+        api_version: "1.41"
 
     - name: Wait for the container to be available
       wait_for:
