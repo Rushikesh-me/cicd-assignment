@@ -23,6 +23,13 @@
         state: started
         enabled: yes
 
+    - name: Remove existing container if it exists
+      community.docker.docker_container:
+        name: "{{ container_name }}"
+        state: absent
+        force_kill: true
+      ignore_errors: yes
+
     - name: Pull the latest Docker image from Docker Hub
       community.docker.docker_image:
         name: "{{ image_name }}"

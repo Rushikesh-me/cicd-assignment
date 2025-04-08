@@ -108,28 +108,71 @@
      }
 
       @Test
-     void testCreateProductE2E_WithInvalidCoupon() {
-         // Arrange
-         Product requestBody = new Product();
-         requestBody.setName("E2E Chair");
-         requestBody.setPrice(new BigDecimal("180.00"));
-         requestBody.setCouponCode("NOSUCHCODE");
+      void testCreateProductE2E_WithInvalidCoupon() {
+          // Arrange
+          Product requestBody = new Product();
+          requestBody.setName("E2E Chair");
+          requestBody.setPrice(new BigDecimal("180.00"));
+          requestBody.setCouponCode("NOSUCHCODE");
 
-         HttpHeaders headers = new HttpHeaders();
-         headers.setContentType(MediaType.APPLICATION_JSON);
-         HttpEntity<Product> request = new HttpEntity<>(requestBody, headers);
+          HttpHeaders headers = new HttpHeaders();
+          headers.setContentType(MediaType.APPLICATION_JSON);
+          HttpEntity<Product> request = new HttpEntity<>(requestBody, headers);
 
-         // Act
-         ResponseEntity<Map> response = restTemplate.postForEntity(productBaseUrl, request, Map.class); // Expect error response
+          // Act
+          ResponseEntity<Map> response = restTemplate.postForEntity(productBaseUrl, request, Map.class); // Expect error response
 
-         // Assert
-         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
-         assertNotNull(response.getBody());
-         //if response.getBody().get("message") is not null, check if it contains the expected error message
-         if (response.getBody().get("message") != null) {
-             assertTrue(response.getBody().get("message").toString().contains("Coupon code not found: NOSUCHCODE"));
-         }
-     }
+          // Assert
+          assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+          assertNotNull(response.getBody());
+          //if response.getBody().get("message") is not null, check if it contains the expected error message
+          if (response.getBody().get("message") != null) {
+              assertTrue(response.getBody().get("message").toString().contains("Coupon code not found: NOSUCHCODE"));
+          }
+      }
+     
+      // Add to ProductE2ETest.java
+
+ @Test
+ void testDeleteProductE2E_WhenExists() {
+     // Arrange: Create a product first to delete it
+     Product p = new Product();
+     p.setName("ToDelete"); p.setPrice(BigDecimal.TEN);
+     Product createdProduct = productRepo.save(p);
+     Long productId = createdProduct.getId();
+
+     // Act
+     ResponseEntity<Void> response = restTemplate.exchange(
+         productBaseUrl + "/" + productId,
+         HttpMethod.DELETE,
+         null, // No request body for delete
+         Void.class
+     );
+
+     // Assert
+     assertEquals(HttpStatus.OK, response.getStatusCode());
+
+     // Verify it's actually deleted
+     assertFalse(productRepo.findById(productId).isPresent());
+ }
+
+ @Test
+ void testDeleteProductE2E_WhenNotFound() {
+      // Arrange: Ensure ID 999 does not exist
+     Long productId = 999L;
+     productRepo.deleteById(productId); // Just in case
+
+      // Act
+     ResponseEntity<Void> response = restTemplate.exchange(
+         productBaseUrl + "/" + productId,
+         HttpMethod.DELETE,
+         null,
+         Void.class
+     );
+
+      // Assert
+     assertEquals(HttpStatus.NOT_FOUND, response.getStatusCode());
+ }
 
      // Add more E2E tests for GET, PUT, DELETE for both Products and Coupons...
  }
