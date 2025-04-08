@@ -3,13 +3,11 @@
   hosts: localhost
   connection: local
   become: yes
-  collections:
-    - community.docker
   gather_facts: false
   environment:
     DOCKER_HOST: "unix:///var/run/docker.sock"
   vars:
-    container_name: productservice
+    container_name: "productservice"
     image_name: "rushikesh0028/productservice:v1"
     published_port: 9090
     container_port: 9090
@@ -33,13 +31,13 @@
       ignore_errors: yes
 
     - name: Pull the latest Docker image from Docker Hub
-      docker_image:
+      community.docker.docker_image:
         name: "{{ image_name }}"
         source: pull
         api_version: "auto"
 
     - name: Run the new Docker container
-      docker_container:
+      community.docker.docker_container:
         name: "{{ container_name }}"
         image: "{{ image_name }}"
         state: started
