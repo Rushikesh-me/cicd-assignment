@@ -45,7 +45,7 @@
         state: started
         restart_policy: always
         published_ports:
-          - "{{ published_port }}:{{ container_port }}"\
+          - "{{ published_port }}:{{ container_port }}"
         api_version: "1.41"
 
     - name: Wait for the container to be available
