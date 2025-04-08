@@ -43,8 +43,11 @@ pipeline {
             steps {
                 sh '''
                   export DOCKER_HOST=unix:///var/run/docker.sock
+                  unset DOCKER_TLS_VERIFY
+                  unset DOCKER_CERT_PATH
                   echo "DOCKER_HOST is $DOCKER_HOST"
-                  ansible-playbook deploy.yml
+                  echo "DOCKER_TLS_VERIFY is ${DOCKER_TLS_VERIFY:-not set}"
+                  ansible-playbook -i inventory_file deploy.yml
                 '''
             }
         }
