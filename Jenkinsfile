@@ -41,13 +41,7 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                sh '''
-                  export DOCKER_HOST=unix:///var/run/docker.sock
-                  unset DOCKER_TLS_VERIFY
-                  unset DOCKER_CERT_PATH
-                  echo "DOCKER_HOST is $DOCKER_HOST"
-                  ansible-playbook -i "localhost," deploy.yml
-                '''
+                sh 'ansible-playbook deploy.yml'
             }
         }
     }

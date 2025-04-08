@@ -3,9 +3,11 @@
   hosts: localhost
   connection: local
   become: yes
+  collections:
+    - community.docker
   gather_facts: false
   environment:
-    
+    DOCKER_HOST: "unix:///var/run/docker.sock"
   vars:
     container_name: productservice
     image_name: "rushikesh0028/productservice:v1"
@@ -28,15 +30,13 @@
         name: "{{ container_name }}"
         state: absent
         force_kill: true
-        
       ignore_errors: yes
 
     - name: Pull the latest Docker image from Docker Hub
       docker_image:
         name: "{{ image_name }}"
         source: pull
-        api_version: "1.41"
-        
+        api_version: "auto"
 
     - name: Run the new Docker container
       docker_container:
@@ -46,7 +46,7 @@
         restart_policy: always
         published_ports:
           - "{{ published_port }}:{{ container_port }}"
-        api_version: "1.41"
+        api_version: "auto"
 
     - name: Wait for the container to be available
       wait_for:
